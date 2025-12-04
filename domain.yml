@@ -1,0 +1,177 @@
+version: "3.1"
+
+intents:
+  - greet
+  - menu_recommendation
+  - give_occasion
+  - menu_order
+  - select_menu
+  - set_quantity
+  - set_serving_style
+  - select_side_menu
+  - set_delivery_date
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+entities:
+  - menu_name
+  - occasion
+  - menu_quantity
+  - serving_style
+  - side_name
+  - side_quantity
+  - date
+  - time
+
+slots:
+  menu_name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: menu_name
+
+  occasion:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: occasion
+    influence_conversation: true
+
+  menu_quantity:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: menu_quantity
+        conditions:
+          - active_loop: order_form
+            requested_slot: menu_quantity
+
+  serving_style:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: serving_style
+
+  side_name:
+    type: list
+    mappings:
+      - type: custom
+
+  side_quantity:
+    type: list
+    mappings:
+      - type: custom
+
+  delivery_date:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: date
+        conditions:
+          - active_loop: order_form
+            requested_slot: delivery_date
+
+  delivery_time:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: time
+        conditions:
+          - active_loop: order_form
+            requested_slot: delivery_time
+
+  side_menu_choice:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: order_form
+            requested_slot: side_menu_choice
+
+  requested_slot:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: requested_slot
+
+  order_confirmation:
+    type: bool
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+    influence_conversation: false
+
+actions:
+  - action_menu_recommendation
+  - action_submit_order
+  - validate_order_form
+
+forms:
+  order_form:
+    required_slots:
+      - menu_name
+      - menu_quantity
+      - serving_style
+      - side_menu_choice
+      - delivery_date
+      - delivery_time
+      - order_confirmation
+
+responses:
+  utter_greet:
+    - text: "안녕하세요! 무엇을 도와드릴까요?"
+
+  utter_ask_occasion:
+    - text: "어떤 상황을 위한 메뉴를 찾으시나요?"
+    - text: "어떤 특별한 날을 위한 메뉴인가요?"
+
+  utter_ask_menu_name:
+    - text: "어떤 메뉴를 주문하시겠어요? (발렌타인 디너, 프렌치 디너, 잉글리시 디너, 샴페인 축제 디너)"
+
+  utter_ask_menu_quantity:
+    - text: "몇 개를 주문하시겠어요?"
+
+  utter_ask_serving_style:
+    - text: "서빙 스타일을 선택해주세요. (심플 스타일, 디럭스 스타일, 그랜드 스타일)"
+
+  utter_ask_side_menu_choice:
+    - text: "사이드 메뉴를 추가하시겠어요?"
+
+  utter_ask_delivery_date:
+    - text: "배송 날짜와 시간을 알려주세요."
+
+  utter_ask_delivery_time:
+    - text: "배송 시간을 알려주세요."
+
+  utter_ask_order_confirmation:
+    - text: "더 필요한 것 있으실까요?"
+
+  utter_did_that_help:
+    - text: "도움이 되셨나요?"
+
+  utter_happy:
+    - text: "좋아요! 기분이 좋으시다니 다행이에요."
+
+  utter_goodbye:
+    - text: "안녕히 가세요!"
+
+  utter_iamabot:
+    - text: "저는 Rasa로 만들어진 봇입니다."
+
+  utter_confirm_order:
+    - text: "네, {menu_name}을 주문하셨습니다!"
+
+  utter_order_complete:
+    - text: "주문이 완료되었습니다! {menu_name} {menu_quantity}개, {serving_style}로 {delivery_date} {delivery_time}에 배송됩니다."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

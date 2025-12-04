@@ -1,0 +1,29 @@
+version: "3.1"
+
+recipe: default.v1
+
+language: ko
+
+pipeline:
+  - name: WhitespaceTokenizer
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    epochs: 200
+    entity_recognition: True
+    use_masked_language_model: True
+    BILOU_flag: True
+  - name: RegexEntityExtractor
+    case_sensitive: False
+  - name: EntitySynonymMapper
+
+policies:
+  - name: RulePolicy
+  - name: MemoizationPolicy
+
+assistant_id: open-source-restaurant-bot

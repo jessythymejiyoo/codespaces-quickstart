@@ -1,0 +1,387 @@
+version: "3.1"
+
+nlu:
+  - intent: menu_recommendation
+    examples: |
+      - 메뉴 추천해주세요
+      - 메뉴 추천해줘
+      - 맛있는 거 추천해줘요
+      - 맛있는 디너 추천해주세요
+      - 특별한 디너 추천해주세요
+      - 저녁 메뉴 추천해줘
+      - 메뉴 추천 받고 싶어요
+      - 인기 메뉴 추천해줄 수 있나요?
+      - 메뉴 추천 좀 해줄래요?
+      - 디너 추천
+      - 메뉴 추천
+
+  - intent: menu_order
+    examples: |
+      - 주문할게요
+      - 주문하고 싶어요
+      - 메뉴 주문해주세요
+      - 디너 주문할래요
+      - 예약하고 싶어요
+
+  - intent: select_menu
+    examples: |
+      - [발렌타인 디너](menu_name) 주문할래요
+      - [프렌치 디너](menu_name) 주문해주세요
+      - [잉글리시 디너](menu_name) 먹고 싶어요
+      - [샴페인 축제 디너](menu_name) 주세요
+      - [발렌타인 디너](menu_name)으로 할게요
+      - [프렌치 디너](menu_name) 시킬게요
+      - [잉글리시 디너](menu_name) 하나 주세요
+      - [샴페인 축제 디너](menu_name) 먹을래요
+      - [발렌타인 디너](menu_name)가 좋겠네요
+      - [프렌치 디너](menu_name) 부탁드려요
+      - [잉글리시 디너](menu_name) 주문하고 싶어요
+      - [샴페인 축제 디너](menu_name)가 좋겠어요
+      - [잉글리쉬 디너](menu_name) 먹고 싶어요
+      - [잉글리쉬 디너](menu_name) 하나 주세요
+      - [잉글리쉬 디너](menu_name) 주문할래요
+      - [잉글리쉬 디너](menu_name) 주문하고 싶어요
+      - [발렌타인](menu_name) 주문할게요
+      - [프렌치](menu_name) 주세요
+      - [잉글리시](menu_name) 먹고 싶어요
+      - [샴페인](menu_name) 주문할래요
+      - [발렌타인](menu_name) 하나 주세요
+      - [프렌치](menu_name) 먹을래요
+      - [잉글리쉬](menu_name) 주문해주세요
+      - [샴페인 축제](menu_name) 시킬게요
+
+  - intent: set_quantity
+    examples: |
+      - [3](menu_quantity)개 주문할래요
+      - [2](menu_quantity)개 주세요
+      - [1](menu_quantity)개요
+      - [5](menu_quantity)개 부탁드려요
+      - [4](menu_quantity)개 할게요
+      - [10](menu_quantity)개 시킬게요
+      - [하나](menu_quantity) 주세요
+      - [한](menu_quantity)개요
+      - [두](menu_quantity)개 주문할게요
+      - [세](menu_quantity)개 부탁드려요
+      - [네](menu_quantity)개 할게요
+      - [다섯](menu_quantity)개 주세요
+      - [여섯](menu_quantity)개 시킬게요
+      - [일곱](menu_quantity)개 주문할래요
+      - [여덟](menu_quantity)개 부탁드려요
+      - [아홉](menu_quantity)개 할게요
+      - [열](menu_quantity)개 주세요
+      - [3](menu_quantity)인분이요
+      - [5](menu_quantity)인분으로 할게요
+      - 두 개
+      - 세 개
+      - 네 개 주세요
+      - 다섯 개
+      - 한 개만요
+      - 두개
+      - 세개 주세요
+
+  - intent: set_serving_style
+    examples: |
+      - [심플 스타일](serving_style)로 할게요
+      - [심플 스타일](serving_style)이 좋겠어요
+      - [심플 스타일](serving_style) 부탁드려요
+      - [디럭스 스타일](serving_style) 주세요
+      - [디럭스 스타일](serving_style)이 좋겠어요
+      - [디럭스 스타일](serving_style)로 주문할래요
+      - [그랜드 스타일](serving_style)이 좋겠어요
+      - [그랜드 스타일](serving_style)로 해주세요
+
+  - intent: select_side_menu
+    examples: |
+      - [빵](side_name) [두](side_quantity)개랑 [샴페인](side_name) [한](side_quantity)병 추가할게요
+      - [바게트](side_name) [네](side_quantity)개랑 [커피](side_name) [한](side_quantity)포트 추가할게요
+      - [에그 스크램블](side_name) [세](side_quantity)개랑 [와인](side_name) [두](side_quantity)잔 추가할게요
+      - [와인](side_name) [한](side_quantity)병 추가해주세요
+      - [와인](side_name) [한](side_quantity) 병 추가해주세요
+      - [베이컨(side_name) [세](side_quantity) 개 더 주세요
+      - [스테이크](side_name) [다섯](side_quantity)개 추가해주세요
+      - [스테이크](side_name) [한](side_quantity)개랑 [샐러드](side_name) [한](side_quantity)개 주세요
+      - [샐러드](side_name) [세](side_quantity)개 부탁드려요
+      - [샐러드](side_name) [한](side_quantity)개하고 [빵](side_name) [네](side_quantity)개 추가할게요
+      - [빵](side_name) [세](side_quantity)개 더 넣어주세요
+      - [베이컨](side_name) [한](side_quantity) 개하고 [와인](side_name) [한](side_quantity)병 추가해 주세요
+      - [에그 스크램블](side_name) [두](side_quantity) 개 추가해주세요
+      - [에그 스크램블](side_name) [네](side_quantity) 개, [바게트](side_name) [여섯](side_quantity) 개 넣어주세요
+      - [바게트](side_name) [2](side_quantity)개 주문할게요
+      - [바게트](side_name) [1](side_quantity)개랑 [커피](side_name) [1](side_quantity)잔 주세요
+      - [커피](side_name) [2](side_quantity)잔이랑 [샴페인](side_name) [1](side_quantity)병 추가할게요
+      - [샴페인](side_name) [2](side_quantity)병 부탁드려요
+      - [커피](side_name) [1](side_quantity)잔만 추가해주세요
+      - [샴페인](side_name)만 [2](side_quantity)병 추가할게요
+      - [샴페인](side_name) [1](side_quantity)병, [와인](side_name) [1](side_quantity)병 둘 다 넣어주세요
+      - [스테이크](side_name) [1](side_quantity)개, [바게트](side_name) [1](side_quantity)개, [와인](side_name) [1](side_quantity)병 추가요
+      - [샐러드](side_name) [1](side_quantity)개, [커피](side_name) [1](side_quantity)잔, [베이컨](side_name) [2](side_quantity)개 주세요
+      - [에그 스크램블](side_name) [1](side_quantity)개랑 [스테이크](side_name) [1](side_quantity)개 더할게요
+      - 추가 안할게요
+      - 아무것도 안 넣을게요
+
+  - intent: set_delivery_date
+    examples: |
+      - [내일](date) [6시](time)에 배송해주세요
+      - [모레](date) [7시](time)에 맞춰서 오면 좋겠어요
+      - [12월 8일](date) [6시 30분](time)까지 배달해주세요
+      - [오늘](date) [저녁 8시](time)에 배송해주세요
+      - [이번 주 금요일](date) [오후 6시](time)에 받고 싶어요
+      - [다음주 월요일](date) [12시](time)에 배달 부탁드려요
+      - [12월 25일](date) [7시](time)에 배송해주세요
+      - [내일](date) [6시](time)에 주세요
+      - [모레](date) [6시 30분](time)
+      - [이번주 금요일](date) [7시](time)
+      - [다음주 토요일](date) [8시](time)에 배송
+      - [6시](time)
+      - [7시](time)
+      - [6시 30분](time)
+      - [7시 15분](time)
+      - [8시](time)
+      - [9시](time)
+      - [6시](time)로 할게요
+      - [7시](time)요
+      - [7시](time)로 해주세요
+      - [8시](time) 부탁드려요
+      - [6시 30분](time)이요
+      - [7시 30분](time)으로 할게요
+      - [여섯 시](time)
+      - [일곱 시](time)
+      - [여덟 시](time)
+      - [아홉 시](time)
+      - [열 시](time)
+      - [여섯 시](time)요
+      - [일곱 시](time)로 할게요
+      - [여덟 시](time) 부탁드려요
+      - [6시](time)로요
+      - [7시](time)에 해주세요
+      - [8시](time)쯤이요
+      - [일곱시 삼십분](time)
+      - [여섯시 삼십분](time)
+      - [여덟시 삼십분](time)
+      - [일곱시 십오분](time)
+      - [여섯시 사십오분](time)
+      - [여덟시 사십오분](time)
+      - [다섯시 삼십분](time)
+      - [아홉시 삼십분](time)
+      - [열시 삼십분](time)
+      - [여섯시](time)
+      - [일곱시](time)
+      - [여덟시](time)
+      - [아홉시](time)
+
+  - intent: give_occasion
+    examples: |
+      - 내일이 어머님 [생신](occasion)이에요
+      - 모레가 어머니 [생신](occasion)이에요
+      - 내일이 아버지 [생신](occasion)이에요
+      - 모레가 아버지 [생신](occasion)이어서요
+      - 어머님 [생신](occasion)이에요
+      - 어머니 [생신](occasion)이에요
+      - 아버지 [생신](occasion)이에요
+      - 엄마 [생신](occasion)이에요
+      - 아빠 [생신](occasion)이에요
+      - [생일](occasion) 파티가 있어요
+      - [생일](occasion)이에요
+      - [가족](occasion) 모임이에요
+      - [커플](occasion) 데이트예요
+      - [발렌타인데이](occasion)여서 맛있는 걸 먹으려고요
+      - [발렌타인데이](occasion)예요
+      - [기념일](occasion) 이에요
+      - [기념일](occasion)이에요
+      - 크리스마스니까 [데이트](occasion) 하려고요
+      - [여자친구](occasion)랑 특별한 날이에요
+      - [여자친구](occasion)랑 [기념일](occasion)이에요
+      - [남자친구](occasion)랑 특별한 날이에요
+      - [남자친구](occasion)랑 [데이트](occasion)예요
+      - [브런치](occasion) 먹으러 왔어요
+      - [혼자](occasion) 근사한 저녁을 먹고 싶어요
+      - [축하](occasion) 자리예요
+      - [파티](occasion) 예요
+      - [생신](occasion)이에요
+
+  - intent: greet
+    examples: |
+      - 안녕
+      - 안녕하세요
+      - 반가워요
+      - 하이
+      - 헬로
+      - 좋은 아침이에요
+      - 안녕하십니까
+
+  - lookup: menu_name
+    examples: |
+      - 발렌타인 디너
+      - 발렌타인
+      - 프렌치 디너
+      - 프렌치
+      - 잉글리시 디너
+      - 잉글리시
+      - 잉글리쉬
+      - 샴페인 축제 디너
+      - 샴페인 축제
+      - 샴페인
+
+  - synonym: 잉글리시 디너
+    examples: |
+      - 잉글리쉬 디너
+      - 잉글리시 디너
+      - 잉글리시
+      - 잉글리쉬
+
+  - synonym: 발렌타인 디너
+    examples: |
+      - 발렌타인
+      - 발렌타인 디너
+
+  - synonym: 프렌치 디너
+    examples: |
+      - 프렌치
+      - 프렌치 디너
+
+  - synonym: 샴페인 축제 디너
+    examples: |
+      - 샴페인 축제
+      - 샴페인
+      - 샴페인 축제 디너
+
+  - intent: goodbye
+    examples: |
+      - 잘가
+      - 안녕히 가세요
+      - 바이바이
+      - 다음에 봐요
+      - 나중에 봐요
+      - 종료
+      - 끝
+      - bye
+      - goodbye
+      - see you later
+
+  - intent: affirm
+    examples: |
+      - 네
+      - 예
+      - 맞아요
+      - 그래요
+      - 당연하죠
+      - 물론이죠
+      - 좋아요
+      - 오케이
+      - 있어요
+      - 있습니다
+      - 필요해요
+
+  - intent: deny
+    examples: |
+      - 아니요
+      - 아니
+      - 싫어요
+      - 아닙니다
+      - 없어요
+      - 없습니다
+      - 없어
+      - 필요없어요
+      - 필요 없어요
+      - 필요 없습니다
+      - 괜찮아요
+      - 괜찮습니다
+      - 됐어요
+      - 됐습니다
+      - 안 필요해요
+      - 필요 없어요
+      - 더 없어요
+      - 이제 됐어요
+
+  - regex: occasion
+    examples: |
+      - 생신
+      - 생일
+      - 가족
+      - 커플
+      - 발렌타인데이
+      - 발렌타인
+      - 기념일
+      - 데이트
+      - 여자친구
+      - 남자친구
+      - 브런치
+      - 혼자
+      - 축하
+      - 파티
+
+  - regex: menu_name
+    examples: |
+      - 발렌타인 디너
+      - 프렌치 디너
+      - 잉글리[시쉬] 디너
+      - 샴페인 축제 디너
+
+  - regex: serving_style
+    examples: |
+      - 심플 스타일
+      - 디럭스 스타일
+      - 그랜드 스타일
+
+  - regex: side_name
+    examples: |
+      - 스테이크
+      - 샐러드
+      - 빵
+      - 베이컨
+      - 에그 스크램블
+      - 바게트
+      - 커피
+      - 와인
+      - 샴페인
+
+  - regex: menu_quantity
+    examples: |
+      - \d+
+      - (하나|한|일)
+      - (둘|두|이)
+      - (셋|세|삼)
+      - (넷|네|사)
+      - (다섯|오)
+      - (여섯|육|륙)
+      - (일곱|칠)
+      - (여덟|팔)
+      - (아홉|구)
+      - (열|십)
+
+  - regex: side_quantity
+    examples: |
+      - \d+
+      - (하나|한|일)
+      - (둘|두|이)
+      - (셋|세|삼)
+      - (넷|네|사)
+      - (다섯|오)
+      - (여섯|육|륙)
+      - (일곱|칠)
+      - (여덟|팔)
+      - (아홉|구)
+      - (열|십)
+
+  - regex: date
+    examples: |
+      - 내일
+      - 모레
+      - 오늘
+      - \d+월 \d+일
+      - 이번 주 \w+요일
+      - 다음주 \w+요일
+
+  - regex: time
+    examples: |
+      - \d+시
+      - \d+시 \d+분
+      - 오전 \d+시
+      - 오후 \d+시
+      - 저녁 \d+시
+      - 정오
+      - (한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|열한|열두)시
+      - (한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|열한|열두)시 (십|이십|삼십|사십|오십)분
+      - (한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|열한|열두)시 (일|이|삼|사|오|육|칠|팔|구|십|십일|십이|십삼|십사|십오|이십|삼십|사십|오십|오십오)분
+
+

@@ -1,0 +1,47 @@
+version: "3.1"
+
+rules:
+  - rule: Say hello anytime the user greets
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: ask occasion first
+    steps:
+      - intent: menu_recommendation
+      - action: utter_ask_occasion
+
+  - rule: do recommendation
+    steps:
+      - intent: give_occasion
+      - action: action_menu_recommendation
+
+  - rule: Say I am a bot anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - rule: Activate order form
+    steps:
+      - intent: menu_order
+      - action: order_form
+      - active_loop: order_form
+
+  - rule: Activate order form from menu selection
+    steps:
+      - intent: select_menu
+      - action: order_form
+      - active_loop: order_form
+
+  - rule: Submit order form
+    condition:
+      - active_loop: order_form
+    steps:
+      - action: order_form
+      - active_loop: null
+      - action: action_submit_order

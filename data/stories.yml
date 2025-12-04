@@ -1,0 +1,30 @@
+version: "3.1"
+
+stories:
+  - story: menu recommendation with occasion
+    steps:
+      - intent: menu_recommendation
+      - action: utter_ask_occasion
+      - intent: give_occasion
+      - action: action_menu_recommendation
+
+  - story: direct occasion mention
+    steps:
+      - intent: give_occasion
+      - action: action_menu_recommendation
+
+  - story: order flow
+    steps:
+      - intent: menu_order
+      - action: order_form
+      - active_loop: order_form
+      - active_loop: null
+      - action: action_submit_order
+
+  - story: order with menu selection
+    steps:
+      - intent: select_menu
+      - action: order_form
+      - active_loop: order_form
+      - active_loop: null
+      - action: action_submit_order

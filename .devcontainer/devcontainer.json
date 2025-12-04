@@ -12,10 +12,27 @@
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [5005, 5055],
+
+	// Set port visibility to public
+	"portsAttributes": {
+		"5005": {
+			"label": "Rasa Server",
+			"onAutoForward": "notify",
+			"visibility": "public"
+		},
+		"5055": {
+			"label": "Rasa Actions Server",
+			"onAutoForward": "notify",
+			"visibility": "public"
+		}
+	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"onCreateCommand": "pip install -U pip uv; uv venv; source .venv/bin/activate; uv pip install --extra-index-url https://europe-west3-python.pkg.dev/rasa-releases/rasa-pro-python/simple rasa-pro",
+
+	// Use 'postStartCommand' to run commands after the container starts
+	"postStartCommand": "bash -c 'cd /workspaces/codespaces-quickstart && source .venv/bin/activate && nohup rasa run actions --port 5055 > actions.log 2>&1 & nohup rasa run --enable-api --cors \"*\" --port 5005 > rasa.log 2>&1 &'",
 
 	// Configure tool-specific properties.
 	"customizations": {
