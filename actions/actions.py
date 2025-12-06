@@ -68,14 +68,49 @@ def parse_korean_time(time_text: str) -> str:
     Examples:
     - '6시' -> '18:00:00'
     - '6시 30분' -> '18:30:00'
+    - '여덟시 삼십분' -> '20:30:00'
     """
     time_text = time_text.strip()
 
-    # "6시", "6시 30분" 형식 처리
+    # "6시", "6시 30분" 형식 처리 (숫자)
     time_match = re.search(r'(\d+)\s*시(?:\s*(\d+)\s*분)?', time_text)
     if time_match:
         hour = int(time_match.group(1))
         minute = int(time_match.group(2)) if time_match.group(2) else 0
+
+        # 주문 시간은 항상 오후로 처리 (12시 미만이면 +12)
+        if hour < 12:
+            hour += 12
+
+        return f"{hour:02d}:{minute:02d}:00"
+
+    # "여덟시 삼십분", "여덟시", "일곱시 삼십분" 형식 처리 (한글)
+    korean_time_pattern = r'(하나|한|둘|두|셋|세|넷|네|다섯|여섯|일곱|여덟|아홉|열|열하나|열한|열둘|열두|스물|이십|스물하나|스물한|이십일)\s*시(?:\s*(삼십|사십|오십|삼|사|오|십|십오|이십|이십오|[0-9]+)\s*분)?'
+    korean_match = re.search(korean_time_pattern, time_text)
+
+    if korean_match:
+        korean_hour = korean_match.group(1)
+        korean_minute = korean_match.group(2) if korean_match.group(2) else None
+
+        # 시간 변환
+        hour = korean_number_to_int(korean_hour)
+        if hour is None:
+            return time_text
+
+        # 분 변환
+        minute = 0
+        if korean_minute:
+            # 숫자인 경우
+            if korean_minute.isdigit():
+                minute = int(korean_minute)
+            # 한글 숫자인 경우
+            else:
+                minute_map = {
+                    '삼십': 30, '사십': 40, '오십': 50,
+                    '삼': 3, '사': 4, '오': 5,
+                    '십': 10, '십오': 15, '이십': 20, '이십오': 25
+                }
+                minute = minute_map.get(korean_minute, 0)
 
         # 주문 시간은 항상 오후로 처리 (12시 미만이면 +12)
         if hour < 12:
@@ -339,47 +374,78 @@ class ValidateOrderForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validate side menu choice and extract side items if selected."""
-        # Get the latest user message and entities
         latest_intent = tracker.latest_message.get('intent', {}).get('name')
 
         # Check if user wants to add side menu
         if latest_intent == 'select_side_menu':
-            # Extract side menu entities from the message
-            side_names = tracker.latest_message.get('entities', [])
-            side_name_list = [e['value'] for e in side_names if e['entity'] == 'side_name']
-            side_quantity_raw = [e['value'] for e in side_names if e['entity'] == 'side_quantity']
+            entities = tracker.latest_message.get('entities', [])
 
-            # If no entities found, try to extract from text
-            if not side_quantity_raw:
-                text = tracker.latest_message.get('text', '')
-                korean_numbers = ['하나', '한', '둘', '두', '셋', '세', '넷', '네',
-                                '다섯', '여섯', '일곱', '여덟', '아홉', '열']
-                import re
-                # Find all numbers (Korean and digits) in text
-                for korean_num in korean_numbers:
-                    if korean_num in text:
-                        side_quantity_raw.append(korean_num)
-                # Also find digits
-                digit_matches = re.findall(r'\d+', text)
-                side_quantity_raw.extend(digit_matches)
+            # 엔티티를 텍스트 출현 순서대로 정렬
+            sorted_entities = sorted(entities, key=lambda x: x.get('start', 0))
 
-            # Convert all Korean numbers to integers
+            # 순서대로 매칭
+            side_items = []
+            current_item = {'name': None, 'quantity': None, 'unit': None}
+
+            for entity in sorted_entities:
+                entity_type = entity['entity']
+                entity_value = entity['value']
+
+                if entity_type == 'side_name':
+                    # 이전 아이템이 있으면 저장
+                    if current_item['name'] is not None:
+                        side_items.append(current_item)
+                    # 새 아이템 시작
+                    current_item = {'name': entity_value, 'quantity': None, 'unit': None}
+
+                elif entity_type == 'side_quantity':
+                    # 한글 숫자를 정수로 변환
+                    converted = korean_number_to_int(entity_value)
+                    if converted is None:
+                        try:
+                            converted = int(entity_value)
+                        except (ValueError, TypeError):
+                            converted = 1
+                    current_item['quantity'] = str(converted)
+
+                elif entity_type == 'side_unit':
+                    current_item['unit'] = entity_value
+
+            # 마지막 아이템 저장
+            if current_item['name'] is not None:
+                side_items.append(current_item)
+
+            # 리스트로 변환
+            side_name_list = []
             side_quantity_list = []
-            for qty in side_quantity_raw:
-                converted = korean_number_to_int(qty)
-                if converted is None:
-                    try:
-                        converted = int(qty)
-                    except (ValueError, TypeError):
-                        converted = None
-                if converted is not None:
-                    side_quantity_list.append(str(converted))
+            side_unit_list = []
+
+            for item in side_items:
+                name = item['name']
+                quantity = item['quantity'] if item['quantity'] else '1'
+                unit = item['unit']
+
+                # 커피/와인 단위별 이름 처리
+                if name == "커피":
+                    if unit == "포트":
+                        name = "커피 1포트"
+                    # 잔이면 그대로 "커피"
+                elif name == "와인":
+                    if unit == "병":
+                        name = "와인 1병"
+                    # 잔이면 그대로 "와인"
+
+                side_name_list.append(name)
+                side_quantity_list.append(quantity)
+                if unit:
+                    side_unit_list.append(unit)
 
             if side_name_list and side_quantity_list:
                 return {
                     "side_menu_choice": "yes",
                     "side_name": side_name_list,
-                    "side_quantity": side_quantity_list
+                    "side_quantity": side_quantity_list,
+                    "side_unit": side_unit_list if side_unit_list else None
                 }
             else:
                 dispatcher.utter_message(text="사이드 메뉴와 수량을 함께 알려주세요. (예: 빵 두 개랑 샴페인 한 병)")
@@ -390,7 +456,8 @@ class ValidateOrderForm(FormValidationAction):
             return {
                 "side_menu_choice": "no",
                 "side_name": None,
-                "side_quantity": None
+                "side_quantity": None,
+                "side_unit": None
             }
         else:
             dispatcher.utter_message(text="사이드 메뉴를 추가하시겠어요?")
@@ -521,6 +588,7 @@ class ActionSubmitOrder(Action):
         serving_style = tracker.get_slot("serving_style")
         side_name = tracker.get_slot("side_name")
         side_quantity = tracker.get_slot("side_quantity")
+        side_unit = tracker.get_slot("side_unit")
         delivery_date = tracker.get_slot("delivery_date")
         delivery_time = tracker.get_slot("delivery_time")
 
@@ -534,10 +602,16 @@ class ActionSubmitOrder(Action):
         if side_name and side_quantity:
             message += f"\n🍽️ 사이드 메뉴\n"
             if isinstance(side_name, list) and isinstance(side_quantity, list):
-                for name, qty in zip(side_name, side_quantity):
-                    message += f"  📌 {name} {qty}개\n"
+                # If we have units, use them; otherwise default to "개"
+                if side_unit and isinstance(side_unit, list):
+                    for name, qty, unit in zip(side_name, side_quantity, side_unit):
+                        message += f"  📌 {name} {qty}{unit}\n"
+                else:
+                    for name, qty in zip(side_name, side_quantity):
+                        message += f"  📌 {name} {qty}개\n"
             else:
-                message += f" 📌 {side_name} {side_quantity}개\n"
+                unit_str = side_unit if side_unit else "개"
+                message += f" 📌 {side_name} {side_quantity}{unit_str}\n"
 
         message += f"\n📦 배송 정보\n"
         message += f"  📌 날짜: {delivery_date}\n"
@@ -553,6 +627,7 @@ class ActionSubmitOrder(Action):
                     "serving_style": serving_style,
                     "side_name": side_name,
                     "side_quantity": side_quantity,
+                    "side_unit": side_unit,
                     "delivery_date": delivery_date,
                     "delivery_time": delivery_time
                 }
@@ -566,6 +641,7 @@ class ActionSubmitOrder(Action):
             SlotSet("serving_style", None),
             SlotSet("side_name", None),
             SlotSet("side_quantity", None),
+            SlotSet("side_unit", None),
             SlotSet("delivery_date", None),
             SlotSet("delivery_time", None)
         ]

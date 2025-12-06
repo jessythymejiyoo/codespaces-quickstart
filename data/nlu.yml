@@ -44,7 +44,7 @@ nlu:
       - [발렌타인](menu_name) 주문할게요
       - [프렌치](menu_name) 주세요
       - [잉글리시](menu_name) 먹고 싶어요
-      - [샴페인](menu_name) 주문할래요
+      - [샴페인 축제](menu_name) 주문할래요
       - [발렌타인](menu_name) 하나 주세요
       - [프렌치](menu_name) 먹을래요
       - [잉글리쉬](menu_name) 주문해주세요
@@ -92,30 +92,53 @@ nlu:
 
   - intent: select_side_menu
     examples: |
-      - [빵](side_name) [두](side_quantity)개랑 [샴페인](side_name) [한](side_quantity)병 추가할게요
-      - [바게트](side_name) [네](side_quantity)개랑 [커피](side_name) [한](side_quantity)포트 추가할게요
-      - [에그 스크램블](side_name) [세](side_quantity)개랑 [와인](side_name) [두](side_quantity)잔 추가할게요
-      - [와인](side_name) [한](side_quantity)병 추가해주세요
-      - [와인](side_name) [한](side_quantity) 병 추가해주세요
-      - [베이컨(side_name) [세](side_quantity) 개 더 주세요
-      - [스테이크](side_name) [다섯](side_quantity)개 추가해주세요
-      - [스테이크](side_name) [한](side_quantity)개랑 [샐러드](side_name) [한](side_quantity)개 주세요
-      - [샐러드](side_name) [세](side_quantity)개 부탁드려요
-      - [샐러드](side_name) [한](side_quantity)개하고 [빵](side_name) [네](side_quantity)개 추가할게요
-      - [빵](side_name) [세](side_quantity)개 더 넣어주세요
-      - [베이컨](side_name) [한](side_quantity) 개하고 [와인](side_name) [한](side_quantity)병 추가해 주세요
-      - [에그 스크램블](side_name) [두](side_quantity) 개 추가해주세요
-      - [에그 스크램블](side_name) [네](side_quantity) 개, [바게트](side_name) [여섯](side_quantity) 개 넣어주세요
-      - [바게트](side_name) [2](side_quantity)개 주문할게요
-      - [바게트](side_name) [1](side_quantity)개랑 [커피](side_name) [1](side_quantity)잔 주세요
-      - [커피](side_name) [2](side_quantity)잔이랑 [샴페인](side_name) [1](side_quantity)병 추가할게요
-      - [샴페인](side_name) [2](side_quantity)병 부탁드려요
-      - [커피](side_name) [1](side_quantity)잔만 추가해주세요
-      - [샴페인](side_name)만 [2](side_quantity)병 추가할게요
-      - [샴페인](side_name) [1](side_quantity)병, [와인](side_name) [1](side_quantity)병 둘 다 넣어주세요
-      - [스테이크](side_name) [1](side_quantity)개, [바게트](side_name) [1](side_quantity)개, [와인](side_name) [1](side_quantity)병 추가요
-      - [샐러드](side_name) [1](side_quantity)개, [커피](side_name) [1](side_quantity)잔, [베이컨](side_name) [2](side_quantity)개 주세요
-      - [에그 스크램블](side_name) [1](side_quantity)개랑 [스테이크](side_name) [1](side_quantity)개 더할게요
+      - [커피](side_name) [한](side_quantity)[잔](side_unit) 추가해주세요
+      - [커피](side_name) [한](side_quantity) [잔](side_unit) 주세요
+      - [커피](side_name) [두](side_quantity)[잔](side_unit) 주문할게요
+      - [커피](side_name) [세](side_quantity) [잔](side_unit) 추가
+      - [커피](side_name) [한](side_quantity)[포트](side_unit) 추가해주세요
+      - [커피](side_name) [한](side_quantity) [포트](side_unit) 주세요
+      - [커피](side_name) [두](side_quantity)[포트](side_unit) 주문할게요
+      - [와인](side_name) [한](side_quantity)[잔](side_unit) 추가해주세요
+      - [와인](side_name) [한](side_quantity) [잔](side_unit) 주세요
+      - [와인](side_name) [두](side_quantity)[잔](side_unit) 주문할게요
+      - [와인](side_name) [세](side_quantity) [잔](side_unit) 추가
+      - [와인](side_name) [한](side_quantity)[병](side_unit) 추가해주세요
+      - [와인](side_name) [한](side_quantity) [병](side_unit) 주세요
+      - [빵](side_name) [두](side_quantity)[개](side_unit)랑 [샴페인](side_name) [한](side_quantity)[병](side_unit) 추가할게요
+      - [바게트](side_name) [네](side_quantity)[개](side_unit)랑 [커피](side_name) [한](side_quantity)[포트](side_unit) 추가할게요
+      - [에그 스크램블](side_name) [세](side_quantity)[개](side_unit)랑 [와인](side_name) [두](side_quantity)[잔](side_unit) 추가할게요
+      - [와인](side_name) [한](side_quantity)[병](side_unit) 추가해주세요
+      - [와인](side_name) [한](side_quantity) [병](side_unit) 추가해주세요
+      - [베이컨](side_name) [세](side_quantity) [개](side_unit) 더 주세요
+      - [스테이크](side_name) [다섯](side_quantity)[개](side_unit) 추가해주세요
+      - [스테이크](side_name) [한](side_quantity)[개](side_unit)랑 [샐러드](side_name) [한](side_quantity)[개](side_unit) 주세요
+      - [샐러드](side_name) [세](side_quantity)[개](side_unit) 부탁드려요
+      - [샐러드](side_name) [한](side_quantity)[개](side_unit)하고 [빵](side_name) [네](side_quantity)[개](side_unit) 추가할게요
+      - [빵](side_name) [세](side_quantity)[개](side_unit) 더 넣어주세요
+      - [베이컨](side_name) [한](side_quantity) [개](side_unit)하고 [와인](side_name) [한](side_quantity)[병](side_unit) 추가해 주세요
+      - [에그 스크램블](side_name) [두](side_quantity) [개](side_unit) 추가해주세요
+      - [에그 스크램블](side_name) [네](side_quantity) [개](side_unit), [바게트](side_name) [여섯](side_quantity) [개](side_unit) 넣어주세요
+      - [바게트](side_name) [2](side_quantity)[개](side_unit) 주문할게요
+      - [바게트](side_name) [1](side_quantity)[개](side_unit)랑 [커피](side_name) [1](side_quantity)[잔](side_unit) 주세요
+      - [커피](side_name) [2](side_quantity)[잔](side_unit)이랑 [샴페인](side_name) [1](side_quantity)[병](side_unit) 추가할게요
+      - [샴페인](side_name) [2](side_quantity)[병](side_unit) 부탁드려요
+      - [커피](side_name) [1](side_quantity)[잔](side_unit)만 추가해주세요
+      - [샴페인](side_name)만 [2](side_quantity)[병](side_unit) 추가할게요
+      - [커피](side_name) [4](side_quantity)[개](side_unit) 추가
+      - [커피](side_name) [3](side_quantity)[잔](side_unit) 추가
+      - [와인](side_name) [5](side_quantity)[병](side_unit) 추가
+      - [빵](side_name) [6](side_quantity)[개](side_unit) 추가
+      - [스테이크](side_name) [4](side_quantity)[개](side_unit) 추가해주세요
+      - [샐러드](side_name) [2](side_quantity)[개](side_unit) 추가할게요
+      - [베이컨](side_name) [3](side_quantity)[개](side_unit) 추가
+      - [바게트](side_name) [5](side_quantity)[개](side_unit) 추가해주세요
+      - [샴페인](side_name) [1](side_quantity)[병](side_unit), [와인](side_name) [1](side_quantity)[병](side_unit) 둘 다 넣어주세요
+      - [스테이크](side_name) [1](side_quantity)[개](side_unit), [바게트](side_name) [1](side_quantity)[개](side_unit), [와인](side_name) [1](side_quantity)[병](side_unit) 추가요
+      - [샐러드](side_name) [1](side_quantity)[개](side_unit), [커피](side_name) [1](side_quantity)[잔](side_unit), [베이컨](side_name) [2](side_quantity)[개](side_unit) 주세요
+      - [에그 스크램블](side_name) [1](side_quantity)[개](side_unit)랑 [스테이크](side_name) [1](side_quantity)[개](side_unit) 더할게요
+      - [커피](side_name) [한](side_quantity)[포트](side_unit) 주세요
+      - [와인](side_name) [두](side_quantity)[잔](side_unit)하고 [샴페인](side_name) [한](side_quantity)[잔](side_unit) 주세요
       - 추가 안할게요
       - 아무것도 안 넣을게요
 
@@ -156,8 +179,12 @@ nlu:
       - [7시](time)에 해주세요
       - [8시](time)쯤이요
       - [일곱시 삼십분](time)
+      - [일곱 시 삼십 분](time)
+      - [일곱 시 삼십 분](time)
       - [여섯시 삼십분](time)
       - [여덟시 삼십분](time)
+      - [여덟 시 삼십분](time)
+      - [여덟 시 삼십 분](time)
       - [일곱시 십오분](time)
       - [여섯시 사십오분](time)
       - [여덟시 사십오분](time)
@@ -220,7 +247,6 @@ nlu:
       - 잉글리쉬
       - 샴페인 축제 디너
       - 샴페인 축제
-      - 샴페인
 
   - synonym: 잉글리시 디너
     examples: |
@@ -242,7 +268,6 @@ nlu:
   - synonym: 샴페인 축제 디너
     examples: |
       - 샴페인 축제
-      - 샴페인
       - 샴페인 축제 디너
 
   - intent: goodbye
@@ -339,7 +364,7 @@ nlu:
     examples: |
       - \d+
       - (하나|한|일)
-      - (둘|두|이)
+      - (둘|두)
       - (셋|세|삼)
       - (넷|네|사)
       - (다섯|오)
@@ -353,7 +378,7 @@ nlu:
     examples: |
       - \d+
       - (하나|한|일)
-      - (둘|두|이)
+      - (둘|두)
       - (셋|세|삼)
       - (넷|네|사)
       - (다섯|오)
@@ -362,6 +387,13 @@ nlu:
       - (여덟|팔)
       - (아홉|구)
       - (열|십)
+
+  - regex: side_unit
+    examples: |
+      - 개
+      - 병
+      - 잔
+      - 포트
 
   - regex: date
     examples: |

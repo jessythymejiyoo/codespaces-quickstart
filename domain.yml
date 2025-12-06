@@ -24,6 +24,7 @@ entities:
   - serving_style
   - side_name
   - side_quantity
+  - side_unit
   - date
   - time
 
@@ -62,6 +63,11 @@ slots:
       - type: custom
 
   side_quantity:
+    type: list
+    mappings:
+      - type: custom
+
+  side_unit:
     type: list
     mappings:
       - type: custom
